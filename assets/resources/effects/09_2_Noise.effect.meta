@@ -1,0 +1,11 @@
+{
+  "ver": "1.0.15",
+  "uuid": "7885f0b7-8f5e-42de-a615-d9f8cbf92806",
+  "compiledShaders": [
+    {
+      "vert": "\n#define _IS_VERT_SHADER 1\n\nprecision highp float;\n\nuniform mat4 cc_matViewProj;\n\nattribute vec3 a_position;\nattribute lowp vec4 a_color;\nattribute mediump vec2 a_uv0;\n\nvarying mediump vec2 v_uv0;\nvarying lowp vec4 v_color;\n\nvoid main () {\n  mat4 mvp;\n  \n  mvp = cc_matViewProj;\n  \n  v_uv0 = a_uv0;\n  v_color = a_color;\n\n  gl_Position = mvp * vec4(a_position, 1);\n}\n\n\n",
+      "frag": "\n#define _IS_FRAG_SHADER 1\n\nprecision mediump float;\n\n#define PI 3.14159265359\n#define TWO_PI 6.28318530718\n\nuniform sampler2D texture;\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvarying mediump vec2 v_uv0;\nvarying lowp vec4 v_color;\n\nvoid main () {\n  vec2 st = gl_FragCoord.xy / u_resolution;\n  st.x *= u_resolution.x / u_resolution.y;\n  vec3 color = vec3(.0);\n\n  \n  vec2 point[5];\n  point[0] = vec2(0.83,0.75);\n  point[1] = vec2(0.60,0.07);\n  point[2] = vec2(0.28,0.64);\n  point[3] = vec2(0.31,0.26);\n  point[4] = vec2(u_time,0)/u_resolution;\n\n  float m_dist = 1.;\n  vec2 m_point;\n\n  for (int i=0; i<5; i++) {\n    float dist = distance(st, point[i]);\n    if (dist < m_dist) {\n      m_dist = dist;\n      m_point = point[i];\n    }\n  }\n\n  color += m_dist*2.;\n  color.rg = m_point;\n  color -= abs(sin(80.0*m_dist))*0.07;\n  color += 1. - step(.02, m_dist);\n\n  gl_FragColor = vec4(color, 1.0);\n}\n\n\n"
+    }
+  ],
+  "subMetas": {}
+}

@@ -1,0 +1,11 @@
+{
+  "ver": "1.0.15",
+  "uuid": "c6b83864-404f-4750-a22d-afe1fd5a21f3",
+  "compiledShaders": [
+    {
+      "vert": "\n#define _IS_VERT_SHADER 1\n\nprecision highp float;\n\nuniform mat4 cc_matViewProj;\n\nattribute vec3 a_position;\nattribute lowp vec4 a_color;\nattribute mediump vec2 a_uv0;\n\nvarying mediump vec2 v_uv0;\nvarying lowp vec4 v_color;\n\nvoid main () {\n  mat4 mvp;\n  \n  mvp = cc_matViewProj;\n  \n  v_uv0 = a_uv0;\n  v_color = a_color;\n\n  gl_Position = mvp * vec4(a_position, 1);\n}\n\n\n",
+      "frag": "\n#define _IS_FRAG_SHADER 1\n\nprecision mediump float;\n\n#define PI 3.14159265359\n#define TWO_PI 6.28318530718\n\nuniform sampler2D texture;\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvarying mediump vec2 v_uv0;\nvarying lowp vec4 v_color;\n\nfloat random(vec2 st) {\n  return fract(sin(dot(st.xy, vec2(12.9898,78.233)))*43758.5453123);\n}\n\nvoid main () {\n  vec2 st = gl_FragCoord.xy / u_resolution;\n\n  float rnd = random(st);\n\n  gl_FragColor = vec4(vec3(rnd), 1.0);\n}\n\n\n"
+    }
+  ],
+  "subMetas": {}
+}

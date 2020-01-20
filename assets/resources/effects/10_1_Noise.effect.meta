@@ -1,0 +1,11 @@
+{
+  "ver": "1.0.15",
+  "uuid": "e4adaf6a-5669-4afd-b222-22013a6f5275",
+  "compiledShaders": [
+    {
+      "vert": "\n#define _IS_VERT_SHADER 1\n\nprecision highp float;\n\nuniform mat4 cc_matViewProj;\n\nattribute vec3 a_position;\nattribute lowp vec4 a_color;\nattribute mediump vec2 a_uv0;\n\nvarying mediump vec2 v_uv0;\nvarying lowp vec4 v_color;\n\nvoid main () {\n  mat4 mvp;\n  \n  mvp = cc_matViewProj;\n  \n  v_uv0 = a_uv0;\n  v_color = a_color;\n\n  gl_Position = mvp * vec4(a_position, 1);\n}\n\n\n",
+      "frag": "\n#define _IS_FRAG_SHADER 1\n\nprecision mediump float;\n\n#define PI 3.14159265359\n#define TWO_PI 6.28318530718\n\nuniform sampler2D texture;\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvarying mediump vec2 v_uv0;\nvarying lowp vec4 v_color;\n\nfloat random(vec2 st) {\n  return fract(sin(dot(st.xy, vec2(12.9898,78.233)))*43758.5453123);\n}\n\nfloat noise(vec2 st) {\n  vec2 i = floor(st);\n  vec2 f = fract(st);\n\n  float a = random(i);\n  float b = random(i+vec2(1.0,0.0));\n  float c = random(i+vec2(0.0,1.0));\n  float d = random(i+vec2(1.0,1.0));\n\n  vec2 u = f * f * (3.0 - 2.0 * f);\n  return mix(a,b,u.x) + (c-a)*u.y*(1.0-u.x)+(d-b)*u.x*u.y;\n}\n\n#define OCTAVES 6\nfloat fbm(vec2 st) {\n  float value = 0.0;\n  float amplitude = .5;\n  float frequency = 0.;\n\n  \n  for (int i=0; i<OCTAVES; i++) {\n    value += amplitude * noise(st);\n    st *= 2.;\n    amplitude *= .5;\n  }\n\n  return value;\n}\n\nvoid main () {\n  vec2 st = gl_FragCoord.xy / u_resolution;\n  st.x *= u_resolution.x / u_resolution.y;\n\n  vec3 color = vec3(.0);\n  color += fbm(st*3.0);\n\n  gl_FragColor = vec4(color, 1.0);\n}\n\n\n"
+    }
+  ],
+  "subMetas": {}
+}

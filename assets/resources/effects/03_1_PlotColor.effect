@@ -1,0 +1,88 @@
+// Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.  
+
+// Note: Current format version is experiment, the format may be changed.
+// The future format may not be compatible, you may need to update the script manually.
+
+// 注意：当前版本的格式是实验性的，之后还会进行修改。
+// 后续版本的格式不保证兼容当前格式，可能需要手动升级到最新版本。，
+%{
+  techniques: [
+    {
+      passes: [
+        {
+          vert: vs
+          frag: fs
+          cullMode: none
+          blend: true
+        }
+      ]
+      layer: 0
+    }
+  ]
+  properties: {
+    texture: {
+      type: sampler2D
+      value: null
+    }
+    u_time: {
+      type: number
+      value: 0
+    }
+    u_resolution: {
+      type: vec2
+      value: [640,640]
+    }
+  }
+%}
+
+%% vs {
+
+precision highp float;
+
+uniform mat4 cc_matViewProj;
+
+attribute vec3 a_position;
+attribute lowp vec4 a_color;
+attribute mediump vec2 a_uv0;
+
+varying mediump vec2 v_uv0;
+varying lowp vec4 v_color;
+
+void main () {
+  mat4 mvp;
+  
+  mvp = cc_matViewProj;
+  
+  v_uv0 = a_uv0;
+  v_color = a_color;
+
+  gl_Position = mvp * vec4(a_position, 1);
+}
+
+}
+
+%% fs {
+
+precision highp float;
+
+uniform sampler2D texture;
+uniform vec2 u_resolution;
+uniform float u_time;
+
+varying mediump vec2 v_uv0;
+varying lowp vec4 v_color;
+
+vec3 colorA = vec3(0.149, 0.141, 0.912);
+vec3 colorB = vec3(1.000, 0.833, 0.224);
+
+void main () {
+  vec3 color = vec3(0.0);
+  float pct = abs(sin(u_time));
+  
+  // Mix uses pct (a value from 0-1) to mix the two color
+  color = mix(colorA, colorB, pct);
+
+  gl_FragColor = vec4(color, 1.);
+}
+
+}

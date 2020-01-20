@@ -1,0 +1,98 @@
+// Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.  
+
+// Note: Current format version is experiment, the format may be changed.
+// The future format may not be compatible, you may need to update the script manually.
+
+// 注意：当前版本的格式是实验性的，之后还会进行修改。
+// 后续版本的格式不保证兼容当前格式，可能需要手动升级到最新版本。，
+%{
+  techniques: [
+    {
+      passes: [
+        {
+          vert: vs
+          frag: fs
+          cullMode: none
+          blend: true
+        }
+      ]
+      layer: 0
+    }
+  ]
+  properties: {
+    texture: {
+      type: sampler2D
+      value: null
+    }
+    u_time: {
+      type: number
+      value: 0
+    }
+    u_resolution: {
+      type: vec2
+      value: [640,640]
+    }
+  }
+%}
+
+%% vs {
+
+precision highp float;
+
+uniform mat4 cc_matViewProj;
+
+attribute vec3 a_position;
+attribute lowp vec4 a_color;
+attribute mediump vec2 a_uv0;
+
+varying mediump vec2 v_uv0;
+varying lowp vec4 v_color;
+
+void main () {
+  mat4 mvp;
+  
+  mvp = cc_matViewProj;
+  
+  v_uv0 = a_uv0;
+  v_color = a_color;
+
+  gl_Position = mvp * vec4(a_position, 1);
+}
+
+}
+
+%% fs {
+
+precision mediump float;
+
+#define TWO_PI 6.28318530718
+
+uniform sampler2D texture;
+uniform vec2 u_resolution;
+uniform float u_time;
+
+varying mediump vec2 v_uv0;
+varying lowp vec4 v_color;
+
+void main () {
+  vec2 st = gl_FragCoord.xy / u_resolution;
+  st.x *= u_resolution.x / u_resolution.y;
+  vec3 color = vec3(0.0);
+  float d = 0.0;
+
+  // Remap the space to -1. to 1.
+  st = st * 2.0 - 1.0;
+
+  // Make the distance field
+  d = length(abs(st) - .3);
+
+  // Visualize the distance field
+  gl_FragColor = vec4(vec3(fract(d*10.0)), 1.0);
+  
+  // Drawing with the distance field
+  //gl_FragColor = vec4(vec3(step(.3, d)), 1.0);
+  //gl_FragColor = vec4(vec3(step(.3, d) * step(d, .4)), 1.0);
+  //gl_FragColor = vec4(vec3(smoothstep(.3, .4, d) * smoothstep(.6, .5, d)), 1.0);
+}
+
+}

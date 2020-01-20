@@ -1,0 +1,11 @@
+{
+  "ver": "1.0.15",
+  "uuid": "b87517c8-cbaa-454c-b9ce-3f4e514f96e8",
+  "compiledShaders": [
+    {
+      "vert": "\n#define _IS_VERT_SHADER 1\n\nprecision highp float;\n\nuniform mat4 cc_matViewProj;\n\nattribute vec3 a_position;\nattribute lowp vec4 a_color;\nattribute mediump vec2 a_uv0;\n\nvarying mediump vec2 v_uv0;\nvarying lowp vec4 v_color;\n\nvoid main () {\n  mat4 mvp;\n  \n  mvp = cc_matViewProj;\n  \n  v_uv0 = a_uv0;\n  v_color = a_color;\n\n  gl_Position = mvp * vec4(a_position, 1);\n}\n\n\n",
+      "frag": "\n#define _IS_FRAG_SHADER 1\n\nprecision mediump float;\n\n#define PI 3.14159265359\n#define TWO_PI 6.28318530718\n\nuniform sampler2D texture;\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvarying mediump vec2 v_uv0;\nvarying lowp vec4 v_color;\n\nfloat circle(vec2 _st, float _radius) {\n  vec2 l = _st - vec2(0.5);\n  return 1.0 - smoothstep(_radius-(_radius*0.01), _radius+(_radius*0.01), dot(1.,1.)*4.0);\n}\n\nvoid main () {\n  vec2 st = gl_FragCoord.xy / u_resolution;\n  vec3 color = vec3(0.0);\n  \n  st *= 3.0;\n  st = fract(st);\n\n  \n  \n  color = vec3(st, 0.0);\n  \n\n  gl_FragColor = vec4(color, 1.0);\n}\n\n\n"
+    }
+  ],
+  "subMetas": {}
+}

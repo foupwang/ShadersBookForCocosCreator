@@ -1,0 +1,98 @@
+// Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.  
+
+// Note: Current format version is experiment, the format may be changed.
+// The future format may not be compatible, you may need to update the script manually.
+
+// 注意：当前版本的格式是实验性的，之后还会进行修改。
+// 后续版本的格式不保证兼容当前格式，可能需要手动升级到最新版本。，
+%{
+  techniques: [
+    {
+      passes: [
+        {
+          vert: vs
+          frag: fs
+          cullMode: none
+          blend: true
+        }
+      ]
+      layer: 0
+    }
+  ]
+  properties: {
+    texture: {
+      type: sampler2D
+      value: null
+    }
+    u_time: {
+      type: number
+      value: 0
+    }
+    u_resolution: {
+      type: vec2
+      value: [640,640]
+    }
+  }
+%}
+
+%% vs {
+
+precision highp float;
+
+uniform mat4 cc_matViewProj;
+
+attribute vec3 a_position;
+attribute lowp vec4 a_color;
+attribute mediump vec2 a_uv0;
+
+varying mediump vec2 v_uv0;
+varying lowp vec4 v_color;
+
+void main () {
+  mat4 mvp;
+  
+  mvp = cc_matViewProj;
+  
+  v_uv0 = a_uv0;
+  v_color = a_color;
+
+  gl_Position = mvp * vec4(a_position, 1);
+}
+
+}
+
+%% fs {
+
+precision mediump float;
+
+#define PI 3.14159265359
+#define TWO_PI 6.28318530718
+
+uniform sampler2D texture;
+uniform vec2 u_resolution;
+uniform float u_time;
+
+varying mediump vec2 v_uv0;
+varying lowp vec4 v_color;
+
+float circle(vec2 _st, float _radius) {
+  vec2 l = _st - vec2(0.5);
+  return 1.0 - smoothstep(_radius-(_radius*0.01), _radius+(_radius*0.01), dot(1.,1.)*4.0);
+}
+
+void main () {
+  vec2 st = gl_FragCoord.xy / u_resolution;
+  vec3 color = vec3(0.0);
+  
+  st *= 3.0;
+  st = fract(st);
+
+  // we pass st as the y & z values of a three dimensional vector to be
+  // properly multiply by a 3x3 matrix
+  color = vec3(st, 0.0);
+  //color = vec3(circle(st, 0.2));
+
+  gl_FragColor = vec4(color, 1.0);
+}
+
+}

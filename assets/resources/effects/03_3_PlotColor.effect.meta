@@ -1,0 +1,11 @@
+{
+  "ver": "1.0.15",
+  "uuid": "df48e60f-2572-4571-b94b-390abfd2a4d8",
+  "compiledShaders": [
+    {
+      "vert": "\n#define _IS_VERT_SHADER 1\n\nprecision highp float;\n\nuniform mat4 cc_matViewProj;\n\nattribute vec3 a_position;\nattribute lowp vec4 a_color;\nattribute mediump vec2 a_uv0;\n\nvarying mediump vec2 v_uv0;\nvarying lowp vec4 v_color;\n\nvoid main () {\n  mat4 mvp;\n  \n  mvp = cc_matViewProj;\n  \n  v_uv0 = a_uv0;\n  v_color = a_color;\n\n  gl_Position = mvp * vec4(a_position, 1);\n}\n\n\n",
+      "frag": "\n#define _IS_FRAG_SHADER 1\n\nprecision mediump float;\n\n#define PI 3.14159265359\n\nuniform sampler2D texture;\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvarying mediump vec2 v_uv0;\nvarying lowp vec4 v_color;\n\nvec3 rgb2hsb(vec3 c) {\n  vec4 K = vec4(0.0, -1.0/3.0, 2.0/3.0, -1.0);\n  vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));\n  vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));\n  float d = q.x - min(q.w, q.y);\n  float e = 1.0e-10;\n  return vec3(abs(q.z+(q.w-q.y) / (6.0*d+e)), d/(q.x+e), q.x);\n}\n\nvec3 hsb2rgb(vec3 c) {\n  vec3 rgb = clamp(abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0);\n  rgb = rgb*rgb*(3.0-2.0*rgb);\n  return c.z * mix(vec3(1.0), rgb, c.y);\n}\n\nvoid main () {\n  vec2 st = gl_FragCoord.xy / u_resolution;\n  vec3 color = vec3(0.0);\n\n  \n  \n  color = hsb2rgb(vec3(st.x, 1.0, st.y));\n  \n  gl_FragColor = vec4(color, 1.0);\n}\n\n\n"
+    }
+  ],
+  "subMetas": {}
+}
