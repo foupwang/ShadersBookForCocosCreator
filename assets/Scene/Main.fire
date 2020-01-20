@@ -2649,7 +2649,7 @@
       "width": 640,
       "height": 640
     },
-    "_fitWidth": true,
+    "_fitWidth": false,
     "_fitHeight": true,
     "_id": "6f5cteKmlPh6NGUsUqxlFR"
   },

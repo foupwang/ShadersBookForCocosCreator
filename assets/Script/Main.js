@@ -29,9 +29,9 @@ cc.Class({
 
     start() {
         // 测试用，直接展示指定Shader
-        this.scheduleOnce(() => {
-            this.showShader(25);
-        }, 0);
+        // this.scheduleOnce(() => {
+        //     this.showShader(25);
+        // }, 0);
     },
 
     init: function () {
