@@ -83,7 +83,7 @@ void main () {
   vec2 st = gl_FragCoord.xy / u_resolution;
   st.x *= u_resolution.x / u_resolution.y;
   vec3 color = vec3(.0);
-  //vec3 color = texture2D(texture, v_uv0).rgb;
+  //color = texture2D(texture, v_uv0).rgb;
 
   // Scale 
   st *= 3.;
@@ -125,7 +125,7 @@ void main () {
   color.r += step(.98, f_st.x) + step(.98, f_st.y);
 
   // Show isolines
-  // color -= step(.7, abs(sin(27.0*m_dist)))*.5;
+  //color -= step(.7, abs(sin(27.0*m_dist)))*.5;
 
   gl_FragColor = vec4(color, 1.0);
 }

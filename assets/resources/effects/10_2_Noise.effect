@@ -116,6 +116,8 @@ void main () {
   //st.x *= u_resolution.x / u_resolution.y;
 
   vec3 color = vec3(.0);
+  //color = texture2D(texture, v_uv0).rgb;
+
   vec2 q = vec2(0.);
   q.x = fbm(st + 0.0*u_time);
   q.y = fbm(st + vec2(1.0));
