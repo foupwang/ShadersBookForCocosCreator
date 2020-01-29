@@ -6,7 +6,7 @@ Cocos Creator版本：2.1.2
 代码地址：git@github.com:foupwang/ShadersBookForCocosCreator.git
 
 部分Shader的展示效果如下：
-![](http://47.104.72.146/wp-content/uploads/2020/01/20200129234725.jpg)
+![](https://github.com/foupwang/ShadersBookForCocosCreator/blob/master/20200129234725.jpg)
 
 ## GLSL内置函数
 #### vec4 texture2D(sampler2D sampler, vec2 coord)
