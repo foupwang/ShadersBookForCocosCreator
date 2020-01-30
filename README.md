@@ -2,7 +2,7 @@
 《[The Book of Shaders](https://thebookofshaders.com/)》是一本关于片段着色器（Fragment Shader）的入门指南，由[Patricio Gonzalez Vivo](http://patriciogonzalezvivo.com)编写，从零开始讲述了如何通过Shader来完成图形图像的绘制。
 
 本项目使用Cocos Creator 2.1.2实现了书中的大部分Shader示例，代码地址：git@github.com:foupwang/ShadersBookForCocosCreator.git。
-> 代码中的Shader绑定逻辑使用了 @zxh19821 大大的ShaderHelper组件（地址：https://github.com/ShawnZhang2015/ShaderHelper2），感谢:) 
+> 代码中的Shader绑定逻辑使用了 @zxh19821 大大的ShaderHelper组件（地址： https://github.com/ShawnZhang2015/ShaderHelper2 ），感谢:) 
 
 ![](http://47.104.72.146/wp-content/uploads/2020/01/20200130120526.jpg)
 
