@@ -4,7 +4,7 @@
 本项目使用Cocos Creator 2.1.2实现了书中的大部分Shader示例，代码地址：git@github.com:foupwang/ShadersBookForCocosCreator.git。
 > 代码中的Shader绑定逻辑使用了 @zxh19821 大大的ShaderHelper组件（地址： https://github.com/ShawnZhang2015/ShaderHelper2 ），感谢:) 
 
-![](http://47.104.72.146/wp-content/uploads/2020/01/20200130120526.jpg)
+![](https://www.chuyouxiang.com/wp-content/uploads/2020/01/20200130120526.jpg)
 
 ## GLSL内置函数
 #### vec4 texture2D(sampler2D sampler, vec2 coord)
